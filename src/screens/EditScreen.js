@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button, TouchableOpacity, TextInput } from "rea
 import { BlogContext } from '../context/BlogContext'
 import { FlatList } from 'react-native-gesture-handler'
 import { Feather } from '@expo/vector-icons'
+import BlogPostForm from '../components/BlogPostForm'
 
 
 const EditScreen = (props) => {
@@ -20,33 +21,19 @@ const EditScreen = (props) => {
 
 
     return <View style={{ flex: 1 }}>
-        <Text style={styles.title}>Editing - {itemId}</Text>
-
-        <Text 
-            style={styles.title}
-        >Edit Title:</Text>
-        <TextInput
-            style={styles.input}
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-        />
-        <Text
-            style={styles.title}
-        >Edit Content:</Text>
-        <TextInput
-            style={styles.input}
-            value={content}
-            onChangeText={(text) => setContent(text)}
-        />
-
-        <Button  title="Add Blog Post" 
-            onPress={
-                () => {
-                    blogPosts.edit(itemId, title, content, () => {
-                        navigation.navigate("Index");
-                    });
-                }
-            }
+       
+       <BlogPostForm 
+            title={blogPost.title}
+            content={blogPost.content}
+            formLabel={`Edit Blog Post - ${itemId}`}
+            titleLabel="Edit Title:"
+            contentLabel="Edit Content:"
+            onSubmit={ ({title, content}) => {
+                blogPosts.edit(itemId, title, content, () => {
+                    navigation.navigate("Index");
+                });
+            }}
+       
         />
 
     </View>

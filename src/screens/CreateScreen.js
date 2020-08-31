@@ -3,47 +3,31 @@ import { View, Text, StyleSheet, Button, TouchableOpacity, TextInput } from "rea
 import { BlogContext } from '../context/BlogContext'
 import { FlatList } from 'react-native-gesture-handler'
 import { Feather } from '@expo/vector-icons'
+import BlogPostForm from '../components/BlogPostForm'
 
 
 const CreateScreen = (props) => {
 
 
     let { navigation } = props
-    // let itemId = navigation.getParam('id');
 
     let blogPosts = useContext(BlogContext)
 
-    const [title, setTitle] = useState('')
-
-    const [content, setContent] = useState('')
-
-    // let blogPost = blogPosts.state.find((item) => item.id == itemId)
-
     return <View style={{ flex: 1 }}>
-        <Text style={styles.title}>Enter Title:</Text>
-        <TextInput
-            style={styles.input}
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-        />
-        <Text
-            style={styles.title}
-        >Enter Content:</Text>
-        <TextInput
-            style={styles.input}
-            value={content}
-            onChangeText={(text) => setContent(text)}
+        <BlogPostForm
+            title={""}
+            content={""}
+            formLabel={`Create Blog Post`}
+            titleLabel="Add Title:"
+            contentLabel="Add Content:"
+            onSubmit={ ({title, content}) => {
+                blogPosts.add(title, content, () => {
+                    navigation.navigate("Index");
+                });
+            }}
+       
         />
 
-        <Button  title="Add Blog Post" 
-            onPress={
-                () => {
-                    blogPosts.add(title, content, () => {
-                        navigation.navigate("Index");
-                    });
-                }
-            }
-        />
 
     </View>
 }
