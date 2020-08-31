@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native"
 import { BlogContext } from '../context/BlogContext'
 import { FlatList } from 'react-native-gesture-handler'
@@ -10,6 +10,18 @@ const IndexScreen = (props) => {
     let { navigation } = props
     let blogPosts = useContext(BlogContext)
     // console.log(navigation)
+    console.log("Index start")
+    console.log(blogPosts)
+    
+    useEffect(() => {
+        blogPosts.getAll()
+        const listener =  navigation.addListener('didFocus', () => {
+            blogPosts.getAll();
+        });
+        return () => {
+            listener.remove();
+        }
+    }, [])
 
     return <View style={{ flex: 1 }}>
         <Text>IndexScreen</Text>

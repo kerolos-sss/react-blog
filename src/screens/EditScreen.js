@@ -30,7 +30,7 @@ const EditScreen = (props) => {
             contentLabel="Edit Content:"
             onSubmit={ ({title, content}) => {
                 blogPosts.edit(itemId, title, content, () => {
-                    navigation.navigate("Index");
+                    navigation.pop();
                 });
             }}
        
