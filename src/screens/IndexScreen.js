@@ -7,6 +7,7 @@ import { Feather } from '@expo/vector-icons'
 
 const IndexScreen = (props) => {
 
+    let { navigation } = props
     let blogPosts = useContext(BlogContext)
 
     return <View style={{ flex: 1 }}>
@@ -18,19 +19,21 @@ const IndexScreen = (props) => {
         <FlatList
             data={blogPosts.state}
             keyExtractor={(p) => p.id}
-            renderItem={({ item }) => {
-                return <View style={styles.row}>
-                    <Text
-                        style={styles.title}
-                    >
-                        {item.title} - {item.id}
-                    </Text>
-                    <TouchableOpacity onPress={ () => blogPosts.delete(item.id)}>
-                        <Feather
-                            style={styles.icon}
-                            name="trash" />
-                    </TouchableOpacity>
-                </View>
+            renderItem={({ item, index }) => {
+                return <TouchableOpacity onPress={() => navigation.navigate("Show", {...item, id: item.id})}>
+                    <View style={styles.row}>
+                        <Text
+                            style={styles.title}
+                        >
+                            {item.title} - {item.id}
+                        </Text>
+                        <TouchableOpacity onPress={() => blogPosts.delete(item.id)}>
+                            <Feather
+                                style={styles.icon}
+                                name="trash" />
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
             }}
         />
     </View>
