@@ -9,18 +9,19 @@ const IndexScreen = (props) => {
 
     let { navigation } = props
     let blogPosts = useContext(BlogContext)
+    // console.log(navigation)
 
     return <View style={{ flex: 1 }}>
         <Text>IndexScreen</Text>
-        <Button
+        {/* <Button
             title="Add Blog Post"
-            onPress={blogPosts.addBlogPost}
-        />
+            onPress={blogPosts.add}
+        /> */}
         <FlatList
             data={blogPosts.state}
             keyExtractor={(p) => p.id}
             renderItem={({ item, index }) => {
-                return <TouchableOpacity onPress={() => navigation.navigate("Show", {...item, id: item.id})}>
+                return <TouchableOpacity onPress={() => navigation.navigate("Show", { ...item, id: item.id })}>
                     <View style={styles.row}>
                         <Text
                             style={styles.title}
@@ -59,6 +60,17 @@ let styles = StyleSheet.create({
 
 })
 
-
+IndexScreen.navigationOptions = ({ navigation }) => {
+    // console.log(navigation)
+    return {
+        headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+                <Feather name="plus" size={30} />
+            </TouchableOpacity>
+        ),
+    };
+}
 
 export default IndexScreen;
+
+

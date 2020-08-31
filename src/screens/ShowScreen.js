@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native"
 import { BlogContext } from '../context/BlogContext'
 import { FlatList } from 'react-native-gesture-handler'
-import { Feather } from '@expo/vector-icons'
+import { EvilIcons } from '@expo/vector-icons'
 
 
 const ShowScreen = (props) => {
@@ -17,6 +17,7 @@ const ShowScreen = (props) => {
 
     return <View style={{ flex: 1 }}>
         <Text>{blogPost.title} - {blogPost.id}</Text>
+        <Text>{blogPost.content} </Text>
     </View>
 }
 
@@ -40,6 +41,14 @@ let styles = StyleSheet.create({
 
 })
 
-
+ShowScreen.navigationOptions = ({navigation}) => {
+    return {
+        headerRight: () => (
+          <TouchableOpacity onPress={() => navigation.navigate('Edit', {id : navigation.getParam('id')})}>
+            <EvilIcons name="pencil" size={35} />
+          </TouchableOpacity>
+        ),
+      };
+}
 
 export default ShowScreen;
